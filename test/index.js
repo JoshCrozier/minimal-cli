@@ -1,7 +1,8 @@
 'use strict';
 
 const expect = require('chai').expect;
-const execAsync = require('./helpers').execAsync;
+const helpers = require('./helpers');
+const execAsync = helpers.execAsync;
 const minimalCli = require('./../index');
 
 describe('minimal-cli', () => {
@@ -17,6 +18,12 @@ describe('minimal-cli', () => {
     }).catch(done);
   });
 
+  it('should throw type errors if invalid options are supplied', () => {
+    const validateInput = input => expect(() => minimalCli(input)).to.throw(TypeError);
+
+    [undefined, null, '', true, 0, []].forEach(validateInput);
+  });
+
   it('should return an empty `commands` array and empty `flags` object when there are no arguments', () => {
     const cli = minimalCli({
       argv: []
@@ -29,11 +36,31 @@ describe('minimal-cli', () => {
 
   it('should return the correct parsed commands/flags based on the provided arguments', () => {
     const cli = minimalCli({
-      argv: ['alpha', 'beta', '--gamma', '--delta=1']
+      argv: ['alpha', 'beta', '--gamma', '--delta=1', '--epsilon', './path/to/file']
     });
 
     expect(cli).to.have.property('commands').to.deep.equal(['alpha', 'beta']);
-    expect(cli).to.have.property('flags').to.deep.equal({ gamma: true, delta: 1 });
+    expect(cli).to.have.property('flags').to.deep.equal({ gamma: true, delta: 1, epsilon: './path/to/file' });
+  });
+
+  it('should output accurate default `help` information', () => {
+    const cli = minimalCli({
+      argv: []
+    });
+
+    expect(cli).to.have.property('help', helpers.DEFAULT_HELP_OUTPUT);
+  });
+
+  it('should output accurate `help` information when supplied with an array of flags', () => {
+    const cli = minimalCli({
+      argv: [],
+      flags: [
+        ['-u, --url <url>', 'string', 'Specify a URL for the HTTP request'],
+        ['-v, --verbose', 'boolean', 'Show additional information']
+      ]
+    });
+
+    expect(cli).to.have.property('help', helpers.CUSTOM_HELP_OUTPUT);
   });
 
   it('should support a custom help message', () => {

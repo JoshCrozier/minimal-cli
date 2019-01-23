@@ -17,6 +17,24 @@ function execAsync(argv) {
   });
 }
 
+const DEFAULT_HELP_OUTPUT = `Usage: cli [command]
+
+Options:
+  -V, --version  Show version number                       [boolean]
+  -h, --help     Show help text                            [boolean]
+`;
+
+const CUSTOM_HELP_OUTPUT = `Usage: cli [command]
+
+Options:
+  -V, --version    Show version number                       [boolean]
+  -u, --url <url>  Specify a URL for the HTTP request        [string]
+  -v, --verbose    Show additional information               [boolean]
+  -h, --help       Show help text                            [boolean]
+`;
+
 module.exports = {
-  execAsync
+  execAsync,
+  DEFAULT_HELP_OUTPUT,
+  CUSTOM_HELP_OUTPUT
 };

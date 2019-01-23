@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint .",
-    "test": "npm run lint && nyc --reporter=html --reporter=text mocha ./test",
+    "test": "npm run lint && nyc --reporter=html --reporter=text mocha ./test/index.js",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "changelog": "conventional-changelog -i CHANGELOG.md -s -r 0"
   },
