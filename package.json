@@ -1,8 +1,16 @@
 {
   "name": "minimal-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple package for creating minimal command-line programs",
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "command",
+    "line",
+    "command-line",
+    "console",
+    "argv",
+    "parser"
+  ],
   "author": "Josh Crozier <crozier4@gmail.com> (https://joshcrozier.com)",
   "license": "MIT",
   "scripts": {
@@ -25,7 +33,7 @@
   },
   "homepage": "https://github.com/JoshCrozier/minimal-cli#readme",
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 8.0.0"
   },
   "dependencies": {
     "minimal-cli-parser": "0.0.1"
