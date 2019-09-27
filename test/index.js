@@ -72,4 +72,26 @@ describe('minimal-cli', () => {
 
     expect(cli).to.have.property('help', help);
   });
+
+  it('should handle the aliasing of flags based on the supplied options', () => {
+    const cli = minimalCli({
+      argv: ['--verbose', '--url', 'https://google.com', '-t', 'GET'],
+      flags: [
+        ['-u, --url <url>', 'string', 'Specify a URL for the HTTP request'],
+        ['-t, --type', 'string', 'The request type'],
+        ['-v, --verbose', 'boolean', 'Show additional information'],
+        ['-a', 'string', 'The user agent'],
+        ['--payload', 'string', 'The stringified request payload when making a POST request']
+      ]
+    });
+
+    expect(cli).to.have.property('flags').to.deep.equal({
+      v: true,
+      verbose: true,
+      t: 'GET',
+      type: 'GET',
+      u: 'https://google.com',
+      url: 'https://google.com'
+    });
+  });
 });
